@@ -47,9 +47,9 @@
       "template": "text"
     },
     "attendeeCount": {
-      "type": "integer",
+      "type": "string",
       "title": "Attendees",
-      "template": "number"
+      "template": "text"
     },
     "description": {
       "type": "string",
@@ -62,9 +62,9 @@
       "template": "text"
     },
     "isOnline": {
-      "type": "boolean",
+      "type": "string",
       "title": "Is Online",
-      "template": "checkbox"
+      "template": "text"
     },
     "scrapedAt": {
       "type": "string",
