@@ -3,7 +3,7 @@
   "actorOutputSchemaVersion": 1,
   "title": "Meetup Event Data",
   "description": "Scraped event data from Meetup.com",
-  "fields": {
+  "properties": {
     "eventName": {
       "type": "string",
       "title": "Event Name",
@@ -27,61 +27,47 @@
     "dateTime": {
       "type": "string",
       "title": "Date & Time",
-      "description": "When the event takes place"
+      "description": "Event date and time (ISO format)"
     },
     "venue": {
       "type": "string",
       "title": "Venue Name",
-      "description": "Name of the event location"
+      "description": "Event venue name"
     },
     "address": {
       "type": "string",
       "title": "Address",
-      "description": "Full street address of venue"
+      "description": "Venue street address"
     },
     "city": {
       "type": "string",
       "title": "City",
-      "description": "City where event is held"
+      "description": "Venue city"
     },
     "attendeeCount": {
       "type": "integer",
-      "title": "Attendee Count",
-      "description": "Number of people attending"
+      "title": "Attendees",
+      "description": "Number of RSVPs"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description",
+      "description": "Event description text"
     },
     "category": {
       "type": "string",
       "title": "Category",
-      "description": "Event category or topic"
+      "description": "Event category/topic"
     },
     "isOnline": {
       "type": "boolean",
       "title": "Is Online",
-      "description": "Whether event is virtual"
+      "description": "Whether event is online"
     },
     "scrapedAt": {
       "type": "string",
       "title": "Scraped At",
-      "description": "Extraction timestamp"
-    }
-  },
-  "views": {
-    "overview": {
-      "title": "Overview",
-      "transformation": {
-        "fields": ["eventName", "groupName", "dateTime", "city", "attendeeCount", "eventUrl"]
-      },
-      "display": {
-        "component": "table",
-        "properties": {
-          "eventName": {"label": "Event"},
-          "groupName": {"label": "Organizer"},
-          "dateTime": {"label": "Date"},
-          "city": {"label": "City"},
-          "attendeeCount": {"label": "Attendees"},
-          "eventUrl": {"label": "URL"}
-        }
-      }
+      "description": "Timestamp of data extraction"
     }
   }
 }
