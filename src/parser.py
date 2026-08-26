@@ -24,10 +24,10 @@ def _extract_next_data(html):
 
 
 def _parse_event(event_data):
-    """Parse a single event from Meetup data.
+    """Parse a single event from Meetup Apollo GraphQL data.
     
     Args:
-        event_data (dict): Raw event data from API/Next.js
+        event_data (dict): Raw event data from Apollo state
         
     Returns:
         dict: Cleaned event data
@@ -35,46 +35,46 @@ def _parse_event(event_data):
     try:
         # Extract event details
         event_id = event_data.get('id', None)
-        event_name = event_data.get('title') or event_data.get('name', None)
+        event_name = event_data.get('title', None)
         
-        # Event URL
-        event_url = None
-        if 'link' in event_data:
-            event_url = event_data['link']
-        elif 'urlname' in event_data:
-            event_url = f"https://www.meetup.com/{event_data['urlname']}/events/{event_id}/"
+        # Event URL (Apollo provides it directly)
+        event_url = event_data.get('eventUrl', None)
         
         # Group info
         group = event_data.get('group', {})
         group_name = group.get('name', None)
-        group_url = None
-        if 'urlname' in group:
-            group_url = f"https://www.meetup.com/{group['urlname']}/"
+        group_urlname = group.get('urlname', None)
+        group_url = f"https://www.meetup.com/{group_urlname}/" if group_urlname else None
         
-        # Date/time
-        date_time = event_data.get('dateTime') or event_data.get('time', None)
-        if date_time and isinstance(date_time, (int, float)):
-            # Convert timestamp to ISO format
-            date_time = datetime.fromtimestamp(date_time / 1000).isoformat()
+        # Date/time (Apollo provides ISO format)
+        date_time = event_data.get('dateTime', None)
         
-        # Location
+        # Location/Venue
         venue = event_data.get('venue', {})
-        venue_name = venue.get('name', None)
-        address = venue.get('address', None)
-        city = venue.get('city', None)
+        venue_name = venue.get('name', None) if venue else None
+        address = venue.get('address', None) if venue else None
+        city = venue.get('city', None) if venue else None
         
-        # Online vs in-person
-        is_online = event_data.get('isOnline', False)
+        # Event type
+        event_type = event_data.get('eventType', None)
+        is_online = event_type == 'ONLINE' if event_type else False
         
-        # Attendees
-        attendee_count = event_data.get('going') or event_data.get('rsvpCount', None)
+        # Attendees (Apollo uses 'going' field)
+        # Get from rsvps if available
+        rsvps_data = event_data.get('rsvps', {})
+        attendee_count = None
+        if isinstance(rsvps_data, dict):
+            attendee_count = rsvps_data.get('totalCount', None)
         
         # Description
         description = event_data.get('description', None)
         
-        # Category/topics
-        topics = event_data.get('topics', [])
-        category = topics[0].get('name') if topics else None
+        # Category - extract from group if available
+        category = None
+        if group and 'category' in group:
+            cat_data = group.get('category', {})
+            if isinstance(cat_data, dict):
+                category = cat_data.get('name', None)
         
         return {
             'eventName': event_name,
@@ -96,11 +96,11 @@ def _parse_event(event_data):
         print(f"Error parsing event: {e}")
         # Return partial data with nulls
         return {
-            'eventName': event_data.get('name') or event_data.get('title', None),
-            'eventUrl': None,
+            'eventName': event_data.get('title', None),
+            'eventUrl': event_data.get('eventUrl', None),
             'groupName': None,
             'groupUrl': None,
-            'dateTime': None,
+            'dateTime': event_data.get('dateTime', None),
             'venue': None,
             'address': None,
             'city': None,

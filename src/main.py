@@ -75,34 +75,67 @@ async def main():
         
         Actor.log.info("__NEXT_DATA__ extracted successfully")
         
-        # Navigate the Next.js data structure to find events
-        # The structure varies, but events are typically under props.pageProps
+        # Extract events from Apollo GraphQL state
+        # Meetup uses Apollo Client which caches data in __APOLLO_STATE__
         events_data = []
         
         try:
             page_props = next_data.get('props', {}).get('pageProps', {})
+            apollo_state = page_props.get('__APOLLO_STATE__', {})
             
-            # Try different possible locations for events data
-            if 'events' in page_props:
-                events_data = page_props['events']
-            elif 'data' in page_props and isinstance(page_props['data'], dict):
-                if 'events' in page_props['data']:
-                    events_data = page_props['data']['events']
-                elif 'results' in page_props['data']:
-                    events_data = page_props['data']['results']
+            if not apollo_state:
+                Actor.log.warning("No Apollo state found in __NEXT_DATA__")
+                await Actor.set_value('DEBUG-NEXT-DATA', next_data)
+                await Actor.exit()
+                return
             
-            # Also check if there's a query result structure
-            if not events_data and 'query' in next_data.get('props', {}):
-                query_data = next_data['props'].get('query', {})
-                if 'events' in query_data:
-                    events_data = query_data['events']
+            root_query = apollo_state.get('ROOT_QUERY', {})
+            
+            # Find recommendedEvents key (has dynamic query params in key name)
+            rec_events_key = None
+            for key in root_query.keys():
+                if key.startswith('recommendedEvents'):
+                    rec_events_key = key
+                    break
+            
+            if not rec_events_key:
+                Actor.log.warning("No recommendedEvents query found in Apollo state")
+                await Actor.set_value('DEBUG-NEXT-DATA', next_data)
+                await Actor.exit()
+                return
+            
+            rec_events = root_query[rec_events_key]
+            edges = rec_events.get('edges', [])
+            
+            Actor.log.info(f"Found {len(edges)} event edges in Apollo state")
+            
+            # Dereference Apollo cache references to get actual event objects
+            for edge in edges:
+                if '__ref' in edge:
+                    edge_obj = apollo_state[edge['__ref']]
+                    if 'node' in edge_obj and '__ref' in edge_obj['node']:
+                        event_ref = edge_obj['node']['__ref']
+                        event_data = apollo_state[event_ref]
+                        
+                        # Dereference nested objects (group, venue)
+                        if 'group' in event_data and isinstance(event_data['group'], dict) and '__ref' in event_data['group']:
+                            group_ref = event_data['group']['__ref']
+                            event_data['group'] = apollo_state.get(group_ref, {})
+                        
+                        if 'venue' in event_data and isinstance(event_data['venue'], dict) and '__ref' in event_data['venue']:
+                            venue_ref = event_data['venue']['__ref']
+                            event_data['venue'] = apollo_state.get(venue_ref, {})
+                        
+                        events_data.append(event_data)
                     
         except Exception as e:
-            Actor.log.error(f"Error navigating Next.js data: {e}")
+            Actor.log.error(f"Error extracting events from Apollo state: {e}")
+            await Actor.set_value('DEBUG-NEXT-DATA', next_data)
+            await Actor.exit()
+            return
         
         if not events_data:
-            Actor.log.warning("No events found in __NEXT_DATA__ structure")
-            # Save the raw data for debugging
+            Actor.log.warning("No events found in Apollo state")
             await Actor.set_value('DEBUG-NEXT-DATA', next_data)
             await Actor.exit()
             return
