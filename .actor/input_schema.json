@@ -1,0 +1,70 @@
+{
+  "title": "Meetup Scraper Input",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "location": {
+      "type": "string",
+      "title": "Location",
+      "description": "City, zip code, or address to search for events",
+      "prefill": "San Francisco, CA",
+      "editor": "textfield"
+    },
+    "radius": {
+      "type": "integer",
+      "title": "Search Radius (miles)",
+      "description": "Distance from location to search for events",
+      "prefill": 25,
+      "minimum": 1,
+      "maximum": 100,
+      "editor": "number"
+    },
+    "category": {
+      "type": "string",
+      "title": "Category",
+      "description": "Filter events by category/topic",
+      "prefill": "Technology",
+      "editor": "select",
+      "enum": ["", "Technology", "Business", "Health & Wellness", "Arts & Culture", "Outdoors & Adventure", "Learning", "Social", "Sports & Fitness"],
+      "enumTitles": ["All Categories", "Technology", "Business", "Health & Wellness", "Arts & Culture", "Outdoors & Adventure", "Learning", "Social", "Sports & Fitness"]
+    },
+    "eventType": {
+      "type": "string",
+      "title": "Event Type",
+      "description": "Filter by event format",
+      "prefill": "both",
+      "editor": "select",
+      "enum": ["both", "online", "in-person"],
+      "enumTitles": ["All Events", "Online Only", "In-Person Only"]
+    },
+    "dateRange": {
+      "type": "string",
+      "title": "Date Range",
+      "description": "When to find events",
+      "prefill": "upcoming",
+      "editor": "select",
+      "enum": ["upcoming", "today", "tomorrow", "this-week", "this-month"],
+      "enumTitles": ["Upcoming", "Today", "Tomorrow", "This Week", "This Month"]
+    },
+    "maxResults": {
+      "type": "integer",
+      "title": "Max Results",
+      "description": "Maximum number of events to scrape",
+      "default": 50,
+      "prefill": 10,
+      "minimum": 1,
+      "maximum": 500
+    },
+    "proxyConfiguration": {
+      "type": "object",
+      "title": "Proxy Configuration",
+      "description": "Apify proxy settings (recommended for reliability)",
+      "prefill": {
+        "useApifyProxy": true,
+        "apifyProxyGroups": ["RESIDENTIAL"]
+      },
+      "editor": "proxy"
+    }
+  },
+  "required": ["maxResults"]
+}
