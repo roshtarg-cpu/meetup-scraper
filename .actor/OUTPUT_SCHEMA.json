@@ -7,67 +7,69 @@
     "eventName": {
       "type": "string",
       "title": "Event Name",
-      "description": "Title of the meetup event"
+      "description": "Title of the meetup event",
+      "template": "text"
     },
     "eventUrl": {
       "type": "string",
       "title": "Event URL",
-      "description": "Link to event page on Meetup"
+      "description": "Link to event page on Meetup",
+      "template": "url"
     },
     "groupName": {
       "type": "string",
       "title": "Organizer Group",
-      "description": "Name of the group organizing the event"
+      "template": "text"
     },
     "groupUrl": {
       "type": "string",
       "title": "Group URL",
-      "description": "Link to organizer group page"
+      "template": "url"
     },
     "dateTime": {
       "type": "string",
       "title": "Date & Time",
-      "description": "Event date and time (ISO format)"
+      "template": "text"
     },
     "venue": {
       "type": "string",
       "title": "Venue Name",
-      "description": "Event venue name"
+      "template": "text"
     },
     "address": {
       "type": "string",
       "title": "Address",
-      "description": "Venue street address"
+      "template": "text"
     },
     "city": {
       "type": "string",
       "title": "City",
-      "description": "Venue city"
+      "template": "text"
     },
     "attendeeCount": {
       "type": "integer",
       "title": "Attendees",
-      "description": "Number of RSVPs"
+      "template": "number"
     },
     "description": {
       "type": "string",
       "title": "Description",
-      "description": "Event description text"
+      "template": "text"
     },
     "category": {
       "type": "string",
       "title": "Category",
-      "description": "Event category/topic"
+      "template": "text"
     },
     "isOnline": {
       "type": "boolean",
       "title": "Is Online",
-      "description": "Whether event is online"
+      "template": "checkbox"
     },
     "scrapedAt": {
       "type": "string",
       "title": "Scraped At",
-      "description": "Timestamp of data extraction"
+      "template": "text"
     }
   }
 }
