@@ -1,5 +1,7 @@
 {
   "actorSpecification": 1,
+  "title": "Meetup Event Data",
+  "description": "Scraped event data from Meetup.com",
   "fields": {
     "eventName": {
       "type": "string",
@@ -45,11 +47,6 @@
       "type": "integer",
       "title": "Attendee Count",
       "description": "Number of people attending"
-    },
-    "description": {
-      "type": "string",
-      "title": "Description",
-      "description": "Full event description"
     },
     "category": {
       "type": "string",
