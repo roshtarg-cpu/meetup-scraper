@@ -1,5 +1,6 @@
 {
   "actorSpecification": 1,
+  "actorOutputSchemaVersion": 1,
   "title": "Meetup Event Data",
   "description": "Scraped event data from Meetup.com",
   "fields": {
