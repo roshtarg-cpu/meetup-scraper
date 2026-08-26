@@ -1,0 +1,89 @@
+{
+  "actorSpecification": 1,
+  "fields": {
+    "eventName": {
+      "type": "string",
+      "title": "Event Name",
+      "description": "Title of the meetup event"
+    },
+    "eventUrl": {
+      "type": "string",
+      "title": "Event URL",
+      "description": "Link to event page on Meetup"
+    },
+    "groupName": {
+      "type": "string",
+      "title": "Organizer Group",
+      "description": "Name of the group organizing the event"
+    },
+    "groupUrl": {
+      "type": "string",
+      "title": "Group URL",
+      "description": "Link to organizer group page"
+    },
+    "dateTime": {
+      "type": "string",
+      "title": "Date & Time",
+      "description": "When the event takes place"
+    },
+    "venue": {
+      "type": "string",
+      "title": "Venue Name",
+      "description": "Name of the event location"
+    },
+    "address": {
+      "type": "string",
+      "title": "Address",
+      "description": "Full street address of venue"
+    },
+    "city": {
+      "type": "string",
+      "title": "City",
+      "description": "City where event is held"
+    },
+    "attendeeCount": {
+      "type": "integer",
+      "title": "Attendee Count",
+      "description": "Number of people attending"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description",
+      "description": "Full event description"
+    },
+    "category": {
+      "type": "string",
+      "title": "Category",
+      "description": "Event category or topic"
+    },
+    "isOnline": {
+      "type": "boolean",
+      "title": "Is Online",
+      "description": "Whether event is virtual"
+    },
+    "scrapedAt": {
+      "type": "string",
+      "title": "Scraped At",
+      "description": "Extraction timestamp"
+    }
+  },
+  "views": {
+    "overview": {
+      "title": "Overview",
+      "transformation": {
+        "fields": ["eventName", "groupName", "dateTime", "city", "attendeeCount", "eventUrl"]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "eventName": {"label": "Event"},
+          "groupName": {"label": "Organizer"},
+          "dateTime": {"label": "Date"},
+          "city": {"label": "City"},
+          "attendeeCount": {"label": "Attendees"},
+          "eventUrl": {"label": "URL"}
+        }
+      }
+    }
+  }
+}
