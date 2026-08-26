@@ -1,0 +1,126 @@
+{
+    "$schema": "https://apify.com/schemas/v1/dataset.ide.json",
+    "actorSpecification": 1,
+    "fields": {},
+    "views": {
+        "overview": {
+            "title": "Overview",
+            "transformation": {
+                "fields": [
+                    "eventName",
+                    "eventUrl",
+                    "groupName",
+                    "dateTime",
+                    "city",
+                    "attendeeCount"
+                ]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "eventName": {
+                        "label": "Event Name",
+                        "format": "text"
+                    },
+                    "eventUrl": {
+                        "label": "Event URL",
+                        "format": "link"
+                    },
+                    "groupName": {
+                        "label": "Organizer Group",
+                        "format": "text"
+                    },
+                    "dateTime": {
+                        "label": "Date & Time",
+                        "format": "text"
+                    },
+                    "city": {
+                        "label": "City",
+                        "format": "text"
+                    },
+                    "attendeeCount": {
+                        "label": "Attendees",
+                        "format": "number"
+                    }
+                }
+            }
+        },
+        "details": {
+            "title": "Full Details",
+            "transformation": {
+                "fields": [
+                    "eventName",
+                    "eventUrl",
+                    "groupName",
+                    "groupUrl",
+                    "dateTime",
+                    "venue",
+                    "address",
+                    "city",
+                    "attendeeCount",
+                    "description",
+                    "category",
+                    "isOnline",
+                    "scrapedAt"
+                ]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "eventName": {
+                        "label": "Event Name",
+                        "format": "text"
+                    },
+                    "eventUrl": {
+                        "label": "Event URL",
+                        "format": "link"
+                    },
+                    "groupName": {
+                        "label": "Organizer Group",
+                        "format": "text"
+                    },
+                    "groupUrl": {
+                        "label": "Group URL",
+                        "format": "link"
+                    },
+                    "dateTime": {
+                        "label": "Date & Time",
+                        "format": "text"
+                    },
+                    "venue": {
+                        "label": "Venue Name",
+                        "format": "text"
+                    },
+                    "address": {
+                        "label": "Address",
+                        "format": "text"
+                    },
+                    "city": {
+                        "label": "City",
+                        "format": "text"
+                    },
+                    "attendeeCount": {
+                        "label": "Attendees",
+                        "format": "number"
+                    },
+                    "description": {
+                        "label": "Description",
+                        "format": "text"
+                    },
+                    "category": {
+                        "label": "Category",
+                        "format": "text"
+                    },
+                    "isOnline": {
+                        "label": "Is Online",
+                        "format": "text"
+                    },
+                    "scrapedAt": {
+                        "label": "Scraped At",
+                        "format": "text"
+                    }
+                }
+            }
+        }
+    }
+}

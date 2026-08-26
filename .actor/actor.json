@@ -1,10 +1,14 @@
 {
+  "$schema": "https://apify.com/schemas/v1/actor.ide.json",
   "actorSpecification": 1,
   "name": "meetup-scraper",
   "title": "Meetup Event Scraper — AI Agent Data Feed",
   "description": "Extract events from Meetup.com by location, category, and date.",
-  "version": "1.0.0",
-  "input": "input_schema.json",
-  "output": "OUTPUT_SCHEMA.json",
+  "version": "1.0",
+  "inputSchema": "./input_schema.json",
+  "outputSchema": "./output_schema.json",
+  "storages": {
+    "dataset": "./dataset_schema.json"
+  },
   "dockerfile": "./Dockerfile"
 }
