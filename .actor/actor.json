@@ -5,5 +5,8 @@
   "description": "Extract events from Meetup.com by location, category, and date. Get event details, organizer info, attendee counts, and venue data. Works with Claude, ChatGPT, and AI agents via Apify MCP. Perfect for event discovery, community research, and networking intelligence.",
   "version": "1.0.0",
   "input": "input_schema.json",
+  "storages": {
+    "dataset": "OUTPUT_SCHEMA.json"
+  },
   "dockerfile": "./Dockerfile"
 }
